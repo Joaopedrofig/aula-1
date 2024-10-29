@@ -1,103 +1,124 @@
 #include <stdio.h>
-int somar(int num1,int num2){
-    return num1+num2;
+#include <limits.h>
+float maiornota(float mat[30][3], int quantid){
+    
+    float nota [30];
+    float maior = 0.0;
+    for (int c = 0; c < quantid; c++){
+        for (int l = 0; l < 3; l++ ){
+         if(mat[c][l]>maior){
+            maior = mat[c][l];
+           }
+        }
+      nota[c] = maior;
+    }
+    return maior;
 }
-int subtrair(int num1, int num2){
-    return num1 - num2;
+float menornota(float mat[30][3], int quantid){
+    
+    float nota [30];
+    float menor = INT_MAX;
+    for (int c = 0; c < quantid; c++){
+        for (int l = 0; l < 3; l++ ){
+         if(mat[c][l]<menor){
+            menor = mat[c][l];
+         } 
+    }
+    nota[c] = menor;
+    }
+     return menor;
 }
-float dividir(float num1, float num2){
-    return num1/num2;
-}
-int multiplicar(int num1, int num2){
-    return num1*num2;
-}
-int fatorial(int num1, int valor){
-    int fat = 1;
-   for( int j = 1; j<=num1; j++){
-      fat*=j;
+float calcularmedia(float matriz[30][3], int quant, int alunos){
+   float media[30];
+   for(int i=0;i<quant;i++){
+    float media1 = 0.0;
+    int soma = 0;
+    for(int j=0;j<3;j++){
+      soma = soma+matriz[i][j]; 
+    }
+    media1 = (float) soma/3;
+    media[i] = media1;
    }
-     return fat;
+   for(int i=0;i<quant;i++){
+    printf("A media do aluno %d eh %.2f\n", alunos, media[i]);
+   }
 }
-int potencia(int base,int expoente, int resultado){
-    resultado = 1;
-    for(int i = 1; i<=expoente;i++){
-        resultado = resultado * base;
+float mediageral(float mat[30][3], float quantidade){
+   float media2[30];
+   float soma2 = 0.0;
+   for(int i=0;i<quantidade;i++){
+    float media3 = 0.0;
+    float soma = 0;
+    
+    for(int j=0;j<3;j++){
+      soma = soma+mat[i][j]; 
     }
-    return resultado;
+    media3 = (float) soma/3;
+    soma2 = soma2 + media3;
+   }
+   float mediasgeral = (float)soma2/quantidade;
+   return mediasgeral;
 }
-int menu(){
-  int num,num2, escolha, alt, fat = 1, resultado = 1;
-    char continuar;
-   do
-   {
+void relatorio(float mat[30][3], float quant, int alunos){
+  float mediageral2[30];
+   int soma2 = 0;
+   for(int i=0;i<quant;i++){
+    float media3 = 0.0;
+    int soma = 0;
     
-   printf("Escolha qual tipo de conta voce deseja fazer: \n1.soma\n2.subtrair\n3.divisao\n4.multiplicacao\n5.fatorial\n6.potencia\n7.finalizar programa: \n");
-   scanf("%d", &escolha);
-   
-   
-   if(escolha==1){
-    printf("Digite um numero: ");
-    scanf("%d", &num);
-    printf("Digite outro numero: ");
-    scanf("%d", &num2);
-    alt = somar(num,num2);
-    printf("%d", alt);
+    for(int j=0;j<3;j++){
+      soma = soma+mat[i][j]; 
     }
+    media3 = (float) soma/3;
+    soma2 = soma2 + media3;
+   }
+   int mediasgeral = (float)soma2/quant;
     
-    else if(escolha==2){
-    printf("Digite um numero: ");
-    scanf("%d", &num);
-    printf("Digite outro numero: ");
-    scanf("%d", &num2);
-    alt = subtrair(num,num2);
-    printf("%d", alt);
+   float media[30];
+   for(int i=0;i<quant;i++){
+    float media1 = 0.0;
+    int soma3 = 0;
+    for(int j=0;j<3;j++){
+      soma3 = soma3+mat[i][j]; 
     }
-    
-    else if(escolha == 3){
-    printf("Digite um numero: ");
-    scanf("%d", &num);
-    printf("Digite outro numero: ");
-    scanf("%d", &num2);
-    alt = dividir(num,num2);
-    printf("%d", alt);
+    media1 = (float) soma3/3;
+    media[i] = media1;
+   }
+   for(int i=0;i<quant;i++){
+    if(media[i]>=mediasgeral){
+      printf("A media do aluno %d eh %.2f = !!APROVADO!!\n", alunos, media[i]);
     }
-    
-    else if(escolha==4){
-    printf("Digite um numero: ");
-    scanf("%d", &num);
-    printf("Digite outro numero: ");
-    scanf("%d", &num2);
-    alt = multiplicar(num,num2);
-    printf("%d", alt);
-    }
-   
-   else if(escolha==5){ 
-    printf("Digite um numero: ");
-    scanf("%d", &num);
-    alt = fatorial(num, fat);
-    printf("%d", alt);
-    }
-
-    else if(escolha==6){
-    printf("Digite a base: ");
-    scanf("%d", &num);
-    printf("Digite o expoente: ");
-    scanf("%d", &num2); 
-    alt = potencia(num,num2, resultado);
-    printf("%d", alt);
-    }
-    else if(escolha==7){
-        printf("Programa finalizado!!!!");
-        return 0;
-    }
-    printf("\nDeseja continuar (s/n)? ");
-    scanf("%d", &continuar);
-   } while (continuar == 'S' || continuar == 's');
-    if(continuar == 's' || continuar == 's'){
-        
+    if(media[i]<mediasgeral){
+      printf("A media do aluno %d eh %.2f = !!REPROVADO!!\n", alunos, media[i]);
     }
 }
-
+}
 int main(){
-   menu();
+  int alunos[30], quantidade , alunoslidos, soma=0;
+  float notas[30][3], notaslidas;
+
+  printf("Digite a quantidade de alunos que voce deseja cadastrar, o maximo permitido sao 30.\nquantidade: ");
+  scanf("%d", &quantidade);
+
+  if(quantidade>30 || quantidade<=0){
+    printf("VALOR INVALIDO");
+    return 0;
+  }
+   
+  for(int i = 0; i < quantidade; i++ ){
+    printf("Digite o ID do aluno: ");
+    scanf("%d", &alunoslidos);
+    alunos[i] = alunoslidos;
+    for(int j = 0; j < 3; j++ ){
+        printf("Digite a nota %d do aluno %d: ", (j+1), alunoslidos);
+        scanf("%f", &notas[i][j]);
+    }
+  }
+  calcularmedia(notas,quantidade,alunoslidos);
+  int maior = maiornota(notas,quantidade);
+  printf("A maior nota da sala foi: %d\n",maior);
+  int menor = menornota(notas,quantidade);
+  printf("A menor nota da sala foi: %d\n",menor);
+  printf("\nA media geral da turma eh: %.2f\n", mediageral(notas,quantidade));
+  relatorio(notas,quantidade,alunoslidos);
 }
